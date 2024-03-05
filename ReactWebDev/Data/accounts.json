@@ -3,24 +3,84 @@
     "Id": 1,
     "Username": "sarah_jackson",
     "Password": "123",
-    "FriendIdList": [2,3]
+    "FriendIdList": [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
   },
   {
     "Id": 2,
     "Username": "david_anderson",
     "Password": "123",
-    "FriendIdList": [4]
+    "FriendIdList": [ 1 ]
   },
   {
     "Id": 3,
-    "Username": "t",
-    "Password": "34t",
-    "FriendIdList": []
+    "Username": "natalie_adams",
+    "Password": "456",
+    "FriendIdList": [ 1, 2, 5, 11 ]
   },
   {
     "Id": 4,
-    "Username": "qwr",
-    "Password": "qw",
-    "FriendIdList": [1]
+    "Username": "alex_nguyen",
+    "Password": "789",
+    "FriendIdList": [ 7, 8, 9, 11, 12 ]
+  },
+  {
+    "Id": 5,
+    "Username": "olivia_smith",
+    "Password": "abc",
+    "FriendIdList": [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12 ]
+  },
+  {
+    "Id": 6,
+    "Username": "jacob_jones",
+    "Password": "def",
+    "FriendIdList": [ 1, 11, 12 ]
+  },
+  {
+    "Id": 7,
+    "Username": "emma_white",
+    "Password": "ghi",
+    "FriendIdList": [ 5, 8, 9, 11, 12 ]
+  },
+  {
+    "Id": 8,
+    "Username": "nathan_carter",
+    "Password": "jkl",
+    "FriendIdList": [ 1, 11, 12 ]
+  },
+  {
+    "Id": 9,
+    "Username": "ava_miller",
+    "Password": "mno",
+    "FriendIdList": [ 5, 6, 7, 8, 10, 11, 12 ]
+  },
+  {
+    "Id": 10,
+    "Username": "liam_thompson",
+    "Password": "pqr",
+    "FriendIdList": [ 11, 12 ]
+  },
+  {
+    "Id": 11,
+    "Username": "sophia_davis",
+    "Password": "stu",
+    "FriendIdList": [ 2, 12 ]
+  },
+  {
+    "Id": 12,
+    "Username": "ethan_wilson",
+    "Password": "vwx",
+    "FriendIdList": [ 1, 8, 9, 10, 11 ]
+  },
+  {
+    "Id": 13,
+    "Username": "john_doe",
+    "Password": "stu",
+    "FriendIdList": [ 1, 2, 4, 5, 6, 7, 8, 9]
+  },
+  {
+    "Id": 14,
+    "Username": "alice_smith",
+    "Password": "vwx",
+    "FriendIdList": [ 1, 3, 4, 5, 6, 9, 10, 11 ]
   }
 ]

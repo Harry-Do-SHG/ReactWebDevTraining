@@ -23,13 +23,6 @@ namespace ReactWebDev.Controllers
       return accounts;
     }
 
-    // GET api/<ValuesController>/5
-    [HttpGet("{id}")]
-    public string Get(int id)
-    {
-      return "value";
-    }
-
     // POST api/<ValuesController>
     [HttpPost]
     public IEnumerable<Account> Post([FromBody] Account account)
@@ -70,11 +63,44 @@ namespace ReactWebDev.Controllers
         }
         catch (Exception ex)
         {
+          // Log the exception
+          Console.WriteLine(ex.ToString());
 
+          // You might want to return a specific result in case of an exception
+          // For example, you could return an empty list of accounts
+          return new List<Account>();
         }
       }
       return accounts;
+    }
+    // POST api/<ValuesController/friends/userId>
+    [HttpPost("friends/{userId}")]
+    public IEnumerable<Account> AddFriend(int userId, [FromBody] string friendname)
+    {
+      // Read existing JSON data from file
+      string jsonData = System.IO.File.ReadAllText(_dataFilePath);
 
+      // Deserialize JSON data into a list of accounts
+      List<Account> accounts = JsonConvert.DeserializeObject<List<Account>>(jsonData) ?? new List<Account>();
+
+      // Find the user account with the given userId
+      Account user = accounts.FirstOrDefault(a => a.Id == userId);
+
+      Account friend = accounts.FirstOrDefault(a => a.Username == friendname);
+
+      if (user != null)
+      {
+        // Add the friendId to the user's friend list
+        user.FriendIdList.Add(friend.Id);
+
+        // Serialize the updated list of accounts back to JSON format
+        string updatedJsonData = JsonConvert.SerializeObject(accounts, Formatting.Indented);
+
+        // Write the updated JSON data back to the file
+        System.IO.File.WriteAllText(_dataFilePath, updatedJsonData);
+      }
+
+      return accounts;
     }
   }
 }

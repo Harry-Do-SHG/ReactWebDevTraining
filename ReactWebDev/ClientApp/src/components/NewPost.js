@@ -6,7 +6,28 @@ export class NewPost extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { title: '', content: '', username:'', submissionMessage: '' };
+    this.state = { title: '', content: '', username: '', submissionMessage: '' };
+  }
+
+  componentDidMount = async () => {
+    const userID = localStorage.getItem('token');
+    const url = `api/login`;
+
+    // Perform a GET request to the login endpoint
+    const checkUsernameResponse = await fetch(url);
+
+    if (checkUsernameResponse.ok) {
+      const responseData = await checkUsernameResponse.json();
+      for (const data of responseData) {
+        if (data.id === parseInt(userID)) {
+          this.setState({ username: data.username });
+        }
+      }
+    } else {
+      // Handle error
+      const errorMessage = await checkUsernameResponse.text();
+      this.setState({ submissionMessage: `Error: ${errorMessage}` });
+    }
   }
 
   handleTitleChange = (e) => {
@@ -19,7 +40,6 @@ export class NewPost extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-
     const response = await fetch('api/post', {
       method: 'POST',
       headers: {
@@ -27,7 +47,8 @@ export class NewPost extends Component {
       },
       body: JSON.stringify({
         title: this.state.title,
-        content: this.state.content
+        content: this.state.content,
+        username: this.state.username
       })
     });
 
@@ -47,15 +68,15 @@ export class NewPost extends Component {
       <div className={styles.container}> {/* Use CSS module class */}
         <h1>Create New Post</h1>
         <form onSubmit={this.handleSubmit}>
-          <div className={styles.formGroup}> {/* Use CSS module class */}
+          <div className="formGroup"> {/* Use CSS module class */}
             <label>Username:</label>
-            <input type="text" value={username} onChange={this.handleUsernameChange} />
+            <input type="text" value={username} readOnly />
           </div>
-          <div className={styles.formGroup}> {/* Use CSS module class */}
+          <div className="formGroup"> {/* Use CSS module class */}
             <label>Title:</label>
             <input type="text" value={title} onChange={this.handleTitleChange} />
           </div>
-          <div className={styles.formGroup}> {/* Use CSS module class */}
+          <div className="formGroup"> {/* Use CSS module class */}
             <label>Content:</label>
             <textarea value={content} onChange={this.handleContentChange} />
           </div>

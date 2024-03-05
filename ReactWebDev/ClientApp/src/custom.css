@@ -45,6 +45,11 @@ button[type="submit"] {
   cursor: pointer;
 }
 
+select {
+  width: 400px;
+  padding: 5px;
+}
+
 .error {
   color: red;
   font-style: italic;

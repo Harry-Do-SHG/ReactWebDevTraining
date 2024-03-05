@@ -6,74 +6,69 @@ using ReactWebDev.Models;
 
 namespace ReactWebDev.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PostController : ControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  public class PostController : ControllerBase
+  {
+    private static string _dataFilePath = Path.Combine("Data", "posts.json");
+    private static string _accountsFilePath = Path.Combine("Data", "accounts.json");
+
+    [HttpGet]
+    public IEnumerable<Post> Get()
     {
-        private static string _dataFilePath = Path.Combine("Data", "posts.json");
-        private static string _accountsFilePath = Path.Combine("Data", "accounts.json");
+      // Read the JSON file
+      string jsonData = System.IO.File.ReadAllText(_dataFilePath);
 
-        [HttpGet]
-        public IEnumerable<Post> Get()
+      // Deserialize JSON data into a list of Post objects
+      List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(jsonData);
+
+      return posts;
+    }
+
+    // POST api/<ValuesController>
+    [HttpPost]
+    public IEnumerable<Post> Post([FromBody] Post post)
+    {
+      List<Post> posts = new List<Post>();
+      if (post != null)
+      {
+        try
         {
-            // Read the JSON file
-            string jsonData = System.IO.File.ReadAllText(_dataFilePath);
+          // Read existing JSON data from file
+          string jsonData = System.IO.File.ReadAllText(_dataFilePath);
 
-            // Deserialize JSON data into a list of Post objects
-            List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(jsonData);
+          // Deserialize JSON data into a list of posts
+          posts = JsonConvert.DeserializeObject<List<Post>>(jsonData) ?? new List<Post>();
+          // Find the maximum ID in the list of accounts
+          int maxId = posts.Count > 0 ? posts.Max(a => a.Id) : 0;
 
-            return posts;
-        }
-
-        // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ValuesController>
-        [HttpPost]
-        public IEnumerable<Post> Post([FromBody] Post post)
-        {
-          List<Post> posts = new List<Post>();
-          if (post != null)
+          // Create a new Post object from the received model
+          var newPost = new Post
           {
-            try
-            {
-              // Read existing JSON data from file
-              string jsonData = System.IO.File.ReadAllText(_dataFilePath);
+            Id = maxId + 1, // Assign a new Id (you may use a different strategy for generating Ids)
+            Title = post.Title,
+            Content = post.Content,
+            Username = post.Username,
+          };
 
-              // Deserialize JSON data into a list of posts
-              posts = JsonConvert.DeserializeObject<List<Post>>(jsonData) ?? new List<Post>();
+          // Add the new post to the list of posts
+          posts.Add(newPost);
 
-              // Create a new Post object from the received model
-              var newPost = new Post
-              {
-                Id = posts.Count + 1, // Assign a new Id (you may use a different strategy for generating Ids)
-                Title = post.Title,
-                Content = post.Content,
-                // You can add other properties as needed
-              };
+          // Serialize the updated list of posts back to JSON format
+          string updatedJsonData = JsonConvert.SerializeObject(posts, Formatting.Indented);
 
-              // Add the new post to the list of posts
-              posts.Add(newPost);
+          // Write the updated JSON data back to the file
+          System.IO.File.WriteAllText(_dataFilePath, updatedJsonData);
 
-              // Serialize the updated list of posts back to JSON format
-              string updatedJsonData = JsonConvert.SerializeObject(posts, Formatting.Indented);
-
-              // Write the updated JSON data back to the file
-              System.IO.File.WriteAllText(_dataFilePath, updatedJsonData);
-
-              return posts;
-            }
-            catch (Exception ex)
-            {
-              
-            }
-          }
           return posts;
         }
+        catch (Exception ex)
+        {
+
+        }
+      }
+      return posts;
+    }
 
     // GET api/post/friends/{userId}
     [HttpGet("friends/{userId}")]
@@ -112,14 +107,14 @@ namespace ReactWebDev.Controllers
 
     // PUT api/<ValuesController>/5
     [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+    public void Put(int id, [FromBody] string value)
+    {
     }
+
+    // DELETE api/<ValuesController>/5
+    [HttpDelete("{id}")]
+    public void Delete(int id)
+    {
+    }
+  }
 }

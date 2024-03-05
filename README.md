@@ -35,12 +35,12 @@ React
 ASP.NET Core
 ## Folder Structure
 ReactWebDev/
-**ClientApp/        # Frontend React application
-**Controllers/      # ASP.NET Core controllers
-**Data/             # Data files (e.g., JSON data files)
-**Models/           # Model classes
-**wwwroot/          # Static files (e.g., CSS, images)
-**ReadMe.md         # Project documentation
+- ClientApp/        # Frontend React application
+- Controllers/      # ASP.NET Core controllers
+- Data/             # Data files (e.g., JSON data files)
+- Models/           # Model classes
+- wwwroot/          # Static files (e.g., CSS, images)
+- README.md         # Project documentation
 
 ## Contributing
 Contributions to this project are welcome. If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.

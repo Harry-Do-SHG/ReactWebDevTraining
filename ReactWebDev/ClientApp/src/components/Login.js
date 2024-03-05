@@ -11,6 +11,10 @@ export class Login extends Component {
     this.state = { username: "", password: "", submissionMessage: "" };
   }
 
+  componentDidMount = async () => {
+    localStorage.removeItem('token');
+  }
+
   handleUsernameChange = (e) => {
     this.setState({ username: e.target.value });
   }
@@ -37,6 +41,7 @@ export class Login extends Component {
           // Username and password match
           this.setState({ submissionMessage: 'Login successful' });
           notFound = false;
+          localStorage.setItem('token', data.id);
           // Navigate to the "/post" URL
           this.props.history.push(`/post?userID=${data.id}`);
         }
