@@ -1,0 +1,26 @@
+[
+  {
+    "Id": 1,
+    "Username": "sarah_jackson",
+    "Password": "123",
+    "FriendIdList": []
+  },
+  {
+    "Id": 2,
+    "Username": "david_anderson",
+    "Password": "123",
+    "FriendIdList": []
+  },
+  {
+    "Id": 3,
+    "Username": "t",
+    "Password": "34t",
+    "FriendIdList": []
+  },
+  {
+    "Id": 4,
+    "Username": "qwr",
+    "Password": "qw",
+    "FriendIdList": []
+  }
+]

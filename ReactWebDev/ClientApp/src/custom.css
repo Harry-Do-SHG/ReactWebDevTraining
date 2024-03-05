@@ -1,0 +1,81 @@
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #E01A76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+/* NewPost.module.css */
+
+.container {
+  margin: 20px;
+}
+
+.formGroup {
+  margin-bottom: 10px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+  width: 400px;
+  padding: 5px;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  width: 100px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-style: italic;
+}
+
+.container {
+    margin: 20px;
+}
+
+.table {
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+.postContainer{
+  padding: 10px;
+}
+
+.cardContainer{
+  display: flex;
+  flex-direction: row;
+}
