@@ -3,13 +3,13 @@
     "Id": 1,
     "Username": "sarah_jackson",
     "Password": "123",
-    "FriendIdList": []
+    "FriendIdList": [2,3]
   },
   {
     "Id": 2,
     "Username": "david_anderson",
     "Password": "123",
-    "FriendIdList": []
+    "FriendIdList": [4]
   },
   {
     "Id": 3,
@@ -21,6 +21,6 @@
     "Id": 4,
     "Username": "qwr",
     "Password": "qw",
-    "FriendIdList": []
+    "FriendIdList": [1]
   }
 ]

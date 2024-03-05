@@ -15,18 +15,20 @@ export class Post extends Component {
   }
 
   renderPostsCards(posts) {
-    return (
+    return posts.length > 0 ? (
       <div className="postContainer">
         {posts.map(post => (
           <Card key={post.id} post={post} />
         ))}
       </div>
-    );
+    ) : (
+      <div className="postContainer">
+        <label>No Posts Available</label>
+      </div>);
   }
 
   render() {
     const { posts, loading } = this.state;
-
     return (
       <div className={styles.container}>
         <h1 id="tabelLabel">Posts</h1>
@@ -40,7 +42,10 @@ export class Post extends Component {
   }
 
   async populateData() {
-    const response = await fetch('api/post');
+    const queryParams = new URLSearchParams(window.location.search);
+    // Get the value of the 'userID' parameter from the query string
+    const userID = queryParams.get('userID');
+    const response = await fetch(`api/post/friends/${userID}`);
     const data = await response.json();
     this.setState({ posts: data, loading: false });
   }

@@ -38,7 +38,7 @@ export class Login extends Component {
           this.setState({ submissionMessage: 'Login successful' });
           notFound = false;
           // Navigate to the "/post" URL
-          this.props.history.push('/post');
+          this.props.history.push(`/post?userID=${data.id}`);
         }
       }
       if (notFound) this.setState({ submissionMessage: 'Incorrect username or password' });

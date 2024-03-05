@@ -11,6 +11,7 @@ namespace ReactWebDev.Controllers
     public class PostController : ControllerBase
     {
         private static string _dataFilePath = Path.Combine("Data", "posts.json");
+        private static string _accountsFilePath = Path.Combine("Data", "accounts.json");
 
         [HttpGet]
         public IEnumerable<Post> Get()
@@ -78,29 +79,35 @@ namespace ReactWebDev.Controllers
     [HttpGet("friends/{userId}")]
     public IEnumerable<Post> GetPostsFromFriends(int userId)
     {
-      // Here, you would implement logic to retrieve posts from the signed-in user's friends
-      // You may fetch user's friends from the database and then filter posts accordingly
-      // For demonstration purposes, let's assume you have a method to get user's friends
-      List<int> friendIds = GetUserFriends(userId); // Example method to get user's friend IDs
+      // Read accounts data to map usernames to user IDs
+      string accountsJson = System.IO.File.ReadAllText(_accountsFilePath);
+      List<Account> accounts = JsonConvert.DeserializeObject<List<Account>>(accountsJson);
 
-      // Read the JSON file
-      string jsonData = System.IO.File.ReadAllText(_dataFilePath);
+      // Get friend IDs for the given user
+      List<int> friendIds = GetUserFriends(accounts, userId);
 
-      // Deserialize JSON data into a list of Post objects
-      List<Post> allPosts = JsonConvert.DeserializeObject<List<Post>>(jsonData);
+      // Read posts data
+      string postsJson = System.IO.File.ReadAllText(_dataFilePath);
+      List<Post> allPosts = JsonConvert.DeserializeObject<List<Post>>(postsJson);
 
       // Filter posts to include only those from user's friends
-      List<Post> friendPosts = allPosts.FindAll(post => friendIds.Contains(post.UserId));
+      List<Post> friendPosts = allPosts.Where(post => friendIds.Contains(GetUserIdByUsername(accounts, post.Username))).ToList();
 
       return friendPosts;
     }
 
-    // Example method to get user's friend IDs (replace with your actual implementation)
-    private List<int> GetUserFriends(int userId)
+    private int GetUserIdByUsername(List<Account> accounts, string username)
     {
-      // Implement logic to fetch user's friends from the database
-      // For now, returning a dummy list of friend IDs
-      return new List<int> { 2, 3, 4 }; // Example friend IDs
+      // Find user ID based on username
+      Account user = accounts.FirstOrDefault(a => a.Username == username);
+      return user?.Id ?? -1; // Return -1 if user not found (you can handle this case accordingly)
+    }
+
+    // Example method to get user's friend IDs (replace with your actual implementation)
+    private List<int> GetUserFriends(List<Account> accounts, int userId)
+    {
+      Account user = accounts.FirstOrDefault(a => a.Id == userId);
+      return user.FriendIdList;
     }
 
     // PUT api/<ValuesController>/5
